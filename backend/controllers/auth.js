@@ -7,6 +7,10 @@ const otpGenerator =require('otp-generator');
 const bcrypt=require("crypt");
 const jwt=require("jsonwebtoken");
 require("dotenv").config();
+
+
+
+
 exports.sendOTP = async(req, res) => {
    try{ const {email} = req.body;
     const checkUserPresent=await User.findOne({email});
@@ -41,14 +45,14 @@ exports.sendOTP = async(req, res) => {
         success:true,
         message: 'otp sent',
         otp,
-     })
+     });
 }
   catch(error){
     console.log(error);
     return res.status(500).json({
         success:false,
         message:error.message,
-    })
+    });
     }
 };
 //signup
@@ -177,7 +181,7 @@ exports.login = async (req, res) => {
         const payload ={
             email: user.email,
             id: user._id,
-            role:user.role,
+            accountType:user.accountType,
         }
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn:"2h",
