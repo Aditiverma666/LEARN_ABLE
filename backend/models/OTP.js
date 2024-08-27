@@ -19,9 +19,10 @@ const OTPSchema = new mongoose.Schema({
 
 
 //a function -> to send emails
+/*  */
 async function sendVerificationEmail(email, otp) {
     try{
-        const mailResponse = await mailSender(email, "Verification Email from StudyNotion", otp);
+        const mailResponse = await mailSender(email, "Verification Email from Learnable", otp);
         console.log("Email sent Successfully: ", mailResponse);
     }
     catch(error) {
@@ -29,6 +30,10 @@ async function sendVerificationEmail(email, otp) {
         throw error;
     }
 }
+/*Sets up a pre-save hook on the OTPSchema, meaning that before a document (representing an OTP instance) is saved to the database, this function will run.
+The async function(next) indicates that the hook is asynchronous and calls next when finished.
+Calls the sendVerificationEmail function before the OTP instance is saved to the database. It uses the email and otp fields from the current document (this refers to the document being saved).
+*/
 
 OTPSchema.pre("save", async function(next) {
     await sendVerificationEmail(this.email, this.otp);
