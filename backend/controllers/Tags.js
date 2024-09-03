@@ -24,15 +24,13 @@ exports.createTag =async (req, res) =>{
         message:'tag created successfully',
     });
   }
-
-
- }
+}
 
  catch(error){
     return res.status(500).json({
         success:false,
         message:'tag not created successfully',
-    })
+    });
  }
 
 };
