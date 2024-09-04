@@ -113,5 +113,27 @@ return res.status(200).json({
             });
         }
 }
+
+
+
 //chronjob
-//how can we schedule a delete operation
+//how can we schedule a delete operation, so that profile doesn't gets deleted in one click
+
+//create instance and then create the order wich takes: amount and currency type in the imput
+//an order id is generated and returned 
+//verify the payment signature 
+//created:-users who clicked on pay button these users are also a part of attempted, attempted, paid :- are the order states...
+//payment authorized: verifying something..
+//created->authorized->captured
+//  |
+// failed
+//payment capture
+//direct to razorpay, we also pass a secret key
+//after the user pays to the razorpay, it returns a secret key, obv after bcrpting it
+//now we need to match whether this key matches the secret key we passed
+//money is transfeered from user account to learnabale account.
+//we can verify the payment through this.
+//this all process is termed as authorization, ie., payment is authorized.
+//;how to setup webhook in razorpay: we just setup an API where we say ki ye wale event per ye call kerna.
+//we setup a webhook with input as secret key to verify the payment.
+//we match the key in encrpted format.
