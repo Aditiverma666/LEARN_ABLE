@@ -1,0 +1,146 @@
+import RatingAndRaview from "../models/RatingAndRaview";
+
+const Models =require("../models/RatingAndRaview");
+const Course= require("../models/Course");
+const User = require("../models/user");
+
+
+                                        //---goal of this controller---
+                                            //create rating
+                                            //get average rating
+                                            //get all the rating 
+
+exports.createRatings = async(req, res)=>{
+try{
+    //get userid
+    const userId= req.user.id; //auth wale middleware se 
+    const {rating, review, courseId} = req.body;
+    //check if student enrolled
+    const courseDetails = await Course.findOne({_id:courseId,
+        studentsEnrolled:{selectMatch:{$eq: userId}},
+    })
+    if(!courseDetails){
+        return res.status(404).json({
+            success:false,
+            message:'student not enrolled in the course',
+        });
+    }
+    //check if student has already given the review or not..
+    const alreadyReviewed= await RatingAndRaview.findOne({
+                                    user:userId,
+                                    course:courseId});
+    if(alreadyReviewed){
+        return res.status(403).json({
+            success:false,
+            message:'student has already reviewed the course',
+        });
+    }
+    //then create the rating and review 
+    const ratingReview = await RatingAndRaview.create({
+            reting:rating,
+            course:courseId,
+            user:userId,
+    });
+
+    //attacth it in the course model, the course which got the rating.
+   const upadatedCourseDetails= await Course.findByIdAndUpdate({_id:courseId},
+               {$push:{
+                    RatingAndReview:ratingReview._id,
+               }
+            }, {new:true});
+    //return the response then.
+    return res.status(200).json({
+        success:true,
+        message:'successfully created the rating and review',
+        ratingReview,
+    });
+}
+
+
+catch(error){
+        return res.status(500).json({
+            success:false,
+            message:'some error occured, try again',
+        });
+
+    }
+};
+
+
+exports.getAverageRating = async(req, res)=>{
+try{
+  //course id is required
+  const courseId= req.body.courseId;
+  //calculate the average rating
+  //aggregation operators are available for average
+  const result = await RatingAndRaview.aggregate(
+                {
+                    $match:{
+                        course:new mongoose.Types.objectId(courseId),  //course id is convertedd into the object from string 
+                    }
+                },
+                {
+                    $group:{
+                        _id:null,
+                        averageRating:{ $avg: "$rating"},
+                     }
+                }
+  );
+  //return the rating
+  if(result.length >0){
+        return res.status(200).json({
+            success:true,
+            averageRating: result[0].averageRating,
+        });
+  }
+  else{
+    //no rating exist
+    return res.status(200).json({
+        success:true,
+        message:'average rating is 0 since no rating is given till now',
+        averageRating:0,
+    });
+  }
+}
+
+catch(error){
+    return res.status(500).json({
+        success:false,
+        message:'error occured, try again',
+    });
+    }
+};
+
+
+
+exports.getAllRating = async (req, res) => {
+    try{
+        //courseId ke corresponding sari ratings return kersakte haii..
+        const allReviews = await RatingAndRaview.find({}).sort({rating:"desc"})
+                                                        .populate({
+                                                            path:"user",
+                                                            select:"firstName, lastName, email, image",
+                                                        })
+                                                        .populate({
+                                                            path:"course",
+                                                            select:"courseName",
+                                                        })
+                                                        .exec();
+        if(!allReviews){
+            return res.status(500).json({
+                success:false,
+                message:'error occured, try again',
+            });
+        }
+        return res.status(200).json({
+                success:true,
+                message:'all the reviews are fetched successfuly',
+            });
+    }
+    catch(error){
+        return res.status(500).json({
+            success:false,
+            message:'error occured, try again',
+        });
+    }
+}

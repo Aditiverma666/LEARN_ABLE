@@ -99,6 +99,9 @@ When new: true is set, the method returns the modified document rather than the 
 };
 
 
+
+
+
 //get all courses
 exports.showAllCourses= async (req, res) =>{
 
@@ -124,4 +127,53 @@ exec(): This method executes the query and returns a Promise, which is awaited t
             mmessage:error.message,
         });
     }
+};
+
+
+
+
+//course ki entire detail return kerna chahte hai
+//not in the form of object rather populate the entire details.
+
+exports.getCourseDetails =async(req, res)=>{
+    try{
+        //get id
+        const courseId=req.body;
+        //course details
+        const coursedetails= await Course.findById({_id:courseId}).populate({
+            path:{
+                path:"instructor",
+                populate:{
+                    path:"additionalDetails",
+                }
+            }
+        }).populate({path:"category"})
+        .populate({path:"ratingAndReviews"})
+        .populate({path:"courseContent",
+                populate:{
+                    path:"subSection",
+                }
+        }).exec();
+        
+        if(!coursedetails){
+            return res.status(400).json({
+                success:false,
+                message:'could not find the course',
+            });
+        }
+        return res.status(200).json({
+            success:true,
+            message:'course details have been fetched successfully',
+            data: coursedetails,
+        });
+
+    }
+    catch(error){
+        return res.status(500).json({
+            success:false,
+            message:'some error occured, try again',
+        });
+    }
 }
+
+ 

@@ -8,7 +8,9 @@ const bcrypt=require("crypt");
 const jwt=require("jsonwebtoken");
 require("dotenv").config();
 
-
+/*Authentication: The process of verifying who a user is (e.g., through a username and password).
+Authorization: The process of verifying
+ what an authenticated user has permission to do (e.g., access a particular page or perform a specific action).*/
 
 
 exports.sendOTP = async(req, res) => {
