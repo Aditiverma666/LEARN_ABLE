@@ -122,7 +122,9 @@ return res.status(200).json({
 //create instance and then create the order wich takes: amount and currency type in the imput
 //an order id is generated and returned 
 //verify the payment signature 
-//created:-users who clicked on pay button these users are also a part of attempted, attempted, paid :- are the order states...
+//created:-users who clicked on pay button these users are also a part of attempted, attempted, paid :- are the 
+//order states...
+
 //payment authorized: verifying something..
 //created->authorized->captured
 //  |

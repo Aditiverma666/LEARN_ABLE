@@ -14,13 +14,17 @@ exports.connect =() =>{
     process.exit(1);
    });
 };
-/*REST APIs (Representational State Transfer Application Programming Interfaces) are a set of rules and conventions for building and interacting with web services. REST APIs enable communication between different systems or components of software using standard HTTP methods like GET, POST, PUT, DELETE, etc.
+/*REST APIs (Representational State Transfer Application Programming Interfaces) are a set of rules and conventions for building and 
+interacting with web services. REST APIs enable communication between different systems or components of software using standard 
+HTTP methods like GET, POST, PUT, DELETE, etc.
 
 Key Concepts of REST APIs:
 Resources and Endpoints:
 
-Resources: A resource in REST is any data or service the client can access, identified by a unique URL. For example, a resource could be a user, a book, or a collection of products.
-Endpoints: An endpoint is a specific URL where a resource is accessed or modified. For example, https://api.example.com/users might be an endpoint to access user data.
+Resources: A resource in REST is any data or service the client can access, identified by a unique URL. For example, a resource could be a
+ user, a book, or a collection of products.
+Endpoints: An endpoint is a specific URL where a resource is accessed or modified. For example, https://api.example.com/users might be
+ an endpoint to access user data.
 HTTP Methods:
 
 GET: Retrieve data from a resource.
@@ -30,10 +34,12 @@ DELETE: Remove a resource.
 PATCH: Partially update a resource.
 Statelessness:
 
-Each request from the client to the server must contain all the information needed to understand and process the request. The server does not store any client context between requests. This makes REST APIs scalable and easier to manage.
+Each request from the client to the server must contain all the information needed to understand and process the request. 
+The server does not store any client context between requests. This makes REST APIs scalable and easier to manage.
 JSON Format:
 
-JSON (JavaScript Object Notation) is the most common format for data exchange in REST APIs due to its simplicity and ease of use. XML can also be used but is less common.
+JSON (JavaScript Object Notation) is the most common format for data exchange in REST APIs due to its simplicity and ease of use. 
+XML can also be used but is less common.
 Example of a JSON response:
 
 json
@@ -45,10 +51,12 @@ Copy code
 }
 Stateless Operations:
 
-Each operation should be stateless. For example, when you retrieve a user’s information via a GET request, the server should not retain any information about that request after it has been completed.
+Each operation should be stateless. For example, when you retrieve a user’s information via a GET request, the server should not retain
+ any information about that request after it has been completed.
 URI (Uniform Resource Identifier):
 
-Each resource in a REST API is identified by a unique URI. For example, https://api.example.com/products/123 might refer to a specific product with ID 123.
+Each resource in a REST API is identified by a unique URI. For example, https://api.example.com/products/123 might refer to a specific
+ product with ID 123.
 HTTP Status Codes:
 
 REST APIs use standard HTTP status codes to indicate the result of an operation:
@@ -70,10 +78,12 @@ DELETE /books/{id}: Delete the book with the specified ID.
 Advantages of REST APIs:
 Scalability: Statelessness and simplicity make it easy to scale REST APIs.
 Flexibility: REST APIs can handle various types of calls and return different data formats.
-Independence: The client and server can evolve independently. The interface is standard, but the underlying implementation can change without affecting the other side.
+Independence: The client and server can evolve independently. The interface is standard, but the underlying implementation can change
+ without affecting the other side.
 Tools and Libraries:
 Postman: A popular tool for testing REST APIs.
 Swagger: Helps in documenting and testing REST APIs.
 Axios or Fetch API: JavaScript libraries commonly used for making HTTP requests to REST APIs.
-REST APIs are fundamental to modern web development, enabling seamless interaction between clients and servers. They form the backbone of many web services and applications, from social media platforms to online stores.
+REST APIs are fundamental to modern web development, enabling seamless interaction between clients and servers. They form the backbone
+ of many web services and applications, from social media platforms to online stores.
 */
